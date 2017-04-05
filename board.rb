@@ -9,8 +9,6 @@ class Board
       (0..7).each do |col|
         @grid[row][col] = Piece.new
       end
-
-
     end
   end
 
@@ -24,25 +22,20 @@ class Board
     @grid[x][y] = val
   end
 
-  def render_board
-    puts " "
-    @grid.each do |row|
-      row.each_with_index do |item, idx|
-        print item == nil ? "O" : "X"
-        print "  " unless idx == row.length - 1
-      end
-      puts "\n"
-    end
-    puts " "
-  end
+
 
   def move_piece(start_pos, end_pos)
     piece = self[start_pos]
-    # raise "There is no piece there" if self[start_pos].nil?
+    raise "There is no piece there" if self[start_pos].nil?
     # raise "You can't move there" unless piece.valid_moves.include?(end_pos)
     self[end_pos] = self[start_pos]
     self[start_pos] = nil
     render_board
+  end
+
+  def in_bounds?(pos)
+    return false if pos.any? { |el| el < 0 || el > 7}
+    true
   end
 
 end
